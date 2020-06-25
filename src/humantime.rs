@@ -69,43 +69,43 @@ impl TimePeriod {
     fn to_string_precise(&self) -> String {
         use self::TimePeriod::*;
         match *self {
-            Now => String::from("now"),
-            Seconds(1) => String::from("1 second"),
-            Seconds(n) => format!("{} seconds", n),
-            Minutes(1) => String::from("1 minute"),
-            Minutes(n) => format!("{} minutes", n),
-            Hours(1) => String::from("1 hour"),
-            Hours(n) => format!("{} hours", n),
-            Days(1) => String::from("1 day"),
-            Days(n) => format!("{} days", n),
-            Weeks(1) => String::from("1 week"),
-            Weeks(n) => format!("{} weeks", n),
-            Months(1) => String::from("1 month"),
-            Months(n) => format!("{} months", n),
-            Years(1) => String::from("1 year"),
-            Years(n) => format!("{} years", n),
-            Eternity => String::from("eternity"),
+            Now => String::from("agora"),
+            Seconds(1) => String::from("1 segundo"),
+            Seconds(n) => format!("{} segundos", n),
+            Minutes(1) => String::from("1 minuto"),
+            Minutes(n) => format!("{} minutos", n),
+            Hours(1) => String::from("1 hora"),
+            Hours(n) => format!("{} horas", n),
+            Days(1) => String::from("1 dia"),
+            Days(n) => format!("{} dias", n),
+            Weeks(1) => String::from("1 semana"),
+            Weeks(n) => format!("{} semanas", n),
+            Months(1) => String::from("1 mês"),
+            Months(n) => format!("{} meses", n),
+            Years(1) => String::from("1 ano"),
+            Years(n) => format!("{} anos", n),
+            Eternity => String::from("eternidade"),
         }
     }
 
     fn to_string_rough(&self) -> String {
         use self::TimePeriod::*;
         match *self {
-            Now => String::from("now"),
-            Seconds(n) => format!("{} seconds", n),
-            Minutes(1) => String::from("a minute"),
-            Minutes(n) => format!("{} minutes", n),
-            Hours(1) => String::from("an hour"),
-            Hours(n) => format!("{} hours", n),
-            Days(1) => String::from("a day"),
-            Days(n) => format!("{} days", n),
-            Weeks(1) => String::from("a week"),
-            Weeks(n) => format!("{} weeks", n),
-            Months(1) => String::from("a month"),
-            Months(n) => format!("{} months", n),
-            Years(1) => String::from("a year"),
-            Years(n) => format!("{} years", n),
-            Eternity => String::from("eternity"),
+            Now => String::from("agora"),
+            Seconds(n) => format!("{} segundos", n),
+            Minutes(1) => String::from("um minuto"),
+            Minutes(n) => format!("{} minutos", n),
+            Hours(1) => String::from("uma hora"),
+            Hours(n) => format!("{} horas", n),
+            Days(1) => String::from("um dia"),
+            Days(n) => format!("{} dias", n),
+            Weeks(1) => String::from("uma semana"),
+            Weeks(n) => format!("{} semanas", n),
+            Months(1) => String::from("um mês"),
+            Months(n) => format!("{} meses", n),
+            Years(1) => String::from("um ano"),
+            Years(n) => format!("{} anos", n),
+            Eternity => String::from("eternidade"),
         }
     }
 
@@ -138,15 +138,15 @@ impl HumanTime {
         }
 
         match tense {
-            Tense::Past => format!("{} ago", text),
-            Tense::Future => format!("in {}", text),
+            Tense::Past => format!("há {}", text),
+            Tense::Future => format!("em {}", text),
             Tense::Present => format!("{}", text),
         }
     }
 
     fn tense(&self, accuracy: Accuracy) -> Tense {
         match self.0.num_seconds() {
-            -10...10 if accuracy.is_rough() => Tense::Present,
+            -10..=10 if accuracy.is_rough() => Tense::Present,
             seconds if seconds.is_negative() => Tense::Past,
             seconds if seconds.is_positive() => Tense::Future,
             _ => Tense::Present,
@@ -170,7 +170,7 @@ impl HumanTime {
             n if n > 90 => Minutes(max(n / MINUTE, 2)),
             n if n > 45 => Minutes(1),
             n if n > 10 => Seconds(n),
-            0...10 => Now,
+            0..=10 => Now,
             _ => Eternity,
         };
 
